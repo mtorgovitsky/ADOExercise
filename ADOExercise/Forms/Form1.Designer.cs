@@ -39,6 +39,7 @@
             this.ibiOrders = new System.Windows.Forms.Label();
             this.lblOrderItems = new System.Windows.Forms.Label();
             this.btnShowProductWindow = new System.Windows.Forms.Button();
+            this.tnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataAnnualReport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.getAnnualReportBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataOrdersByYear)).BeginInit();
@@ -105,17 +106,28 @@
             // 
             this.btnShowProductWindow.Location = new System.Drawing.Point(399, 29);
             this.btnShowProductWindow.Name = "btnShowProductWindow";
-            this.btnShowProductWindow.Size = new System.Drawing.Size(314, 114);
+            this.btnShowProductWindow.Size = new System.Drawing.Size(314, 69);
             this.btnShowProductWindow.TabIndex = 6;
             this.btnShowProductWindow.Text = "Show Product Window";
             this.btnShowProductWindow.UseVisualStyleBackColor = true;
             this.btnShowProductWindow.Click += new System.EventHandler(this.btnShowProductWindow_Click);
+            // 
+            // tnExit
+            // 
+            this.tnExit.Location = new System.Drawing.Point(399, 124);
+            this.tnExit.Name = "tnExit";
+            this.tnExit.Size = new System.Drawing.Size(314, 32);
+            this.tnExit.TabIndex = 7;
+            this.tnExit.Text = "E&xit";
+            this.tnExit.UseVisualStyleBackColor = true;
+            this.tnExit.Click += new System.EventHandler(this.tnExit_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 472);
+            this.Controls.Add(this.tnExit);
             this.Controls.Add(this.btnShowProductWindow);
             this.Controls.Add(this.lblOrderItems);
             this.Controls.Add(this.ibiOrders);
@@ -149,6 +161,7 @@
         private System.Windows.Forms.Label ibiOrders;
         private System.Windows.Forms.Label lblOrderItems;
         private System.Windows.Forms.Button btnShowProductWindow;
+        private System.Windows.Forms.Button tnExit;
     }
 }
 

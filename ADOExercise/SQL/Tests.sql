@@ -128,7 +128,7 @@ go
 exec GetOrderItems 10253
 
 
---Product Update Window
+--For Product Update Form
 use Northwind
 
 go
@@ -155,6 +155,29 @@ select
 from
 	Products
 where ProductID = @ProductID
+go
+
+go
+create proc GetProductByName(@ProductName nvarchar(40)) as
+select
+	ProductID,
+	ProductName,
+	SupplierID,
+	CategoryID,
+	QuantityPerUnit,
+	UnitPrice,
+	UnitsInStock,
+	UnitsOnOrder,
+	ReorderLevel
+from
+	Products
+where ProductName = @ProductName
+go
+
+go
+create proc FetAllProducts as
+select *
+from Products
 go
 
 select count(ProductID)from Products

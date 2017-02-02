@@ -14,6 +14,8 @@ namespace ADOExercise.Forms
 {
     public partial class frmProdUpd : Form
     {
+        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+
         public frmProdUpd()
         {
             InitializeComponent();
@@ -26,23 +28,24 @@ namespace ADOExercise.Forms
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            if (txtFindProduct.Text != String.Empty)
-            {
-                Regex onlyNum = new Regex(@"^\d+$");
-                if (onlyNum.IsMatch(txtFindProduct.Text))
-                {
-                    //No need to TryParse because it's only numbers (if is Match)
-                    int searchValue = int.Parse(txtFindProduct.Text);
-                    NorthwindDAL nwd = new NorthwindDAL();
-                    int prodCount = nwd.ProductsCount();
-                    if (searchValue > 0 && searchValue <= prodCount)
-                    {
-                        //DataTable prodDt = new DataTable();
-                        //prodDt = nwd.GetProductDetails(searchValue );
-                        FillProductDetails(searchValue, nwd);
-                    }
-                }
-            }
+            //if (txtFindProduct.Text != String.Empty)
+            //{
+            //    Regex onlyNum = new Regex(@"^\d+$");
+            //    if (onlyNum.IsMatch(txtFindProduct.Text))
+            //    {
+            //        //No need to TryParse because it's only numbers (if is Match)
+            //        int searchValue = int.Parse(txtFindProduct.Text);
+            //        NorthwindDAL nwd = new NorthwindDAL();
+            //        int prodCount = nwd.ProductsCount();
+            //        if (searchValue > 0 && searchValue <= prodCount)
+            //        {
+            //            //DataTable prodDt = new DataTable();
+            //            //prodDt = nwd.GetProductDetails(searchValue );
+            //            FillProductDetails(searchValue, nwd);
+            //        }
+            //    }
+            //}
+            cmbFind.
         }
 
         private void FillProductDetails(int prodID, NorthwindDAL nwd)

@@ -62,3 +62,37 @@ where
 order by
 	P.ProductID
 go
+
+go
+create proc GetProductByID(@ProductID int) as
+select
+	ProductID,
+	ProductName,
+	SupplierID,
+	CategoryID,
+	QuantityPerUnit,
+	UnitPrice,
+	UnitsInStock,
+	UnitsOnOrder,
+	ReorderLevel
+from
+	Products
+where ProductID = @ProductID
+go
+
+go
+create proc GetProductByName(@ProductName nvarchar(40)) as
+select
+	ProductID,
+	ProductName,
+	SupplierID,
+	CategoryID,
+	QuantityPerUnit,
+	UnitPrice,
+	UnitsInStock,
+	UnitsOnOrder,
+	ReorderLevel
+from
+	Products
+where ProductName = @ProductName
+go

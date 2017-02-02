@@ -32,7 +32,7 @@
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.lblID = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblSupplier = new System.Windows.Forms.Label();
             this.cmbSupplier = new System.Windows.Forms.ComboBox();
@@ -48,7 +48,7 @@
             this.lblUnitInStock = new System.Windows.Forms.Label();
             this.txtReorderLevel = new System.Windows.Forms.TextBox();
             this.lblReorderLevel = new System.Windows.Forms.Label();
-            this.txtFindProduct = new System.Windows.Forms.TextBox();
+            this.cmbFind = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnFind
@@ -86,12 +86,12 @@
             this.txtID.Size = new System.Drawing.Size(151, 20);
             this.txtID.TabIndex = 4;
             // 
-            // textBox1
+            // txtName
             // 
-            this.textBox1.Location = new System.Drawing.Point(128, 109);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(151, 20);
-            this.textBox1.TabIndex = 6;
+            this.txtName.Location = new System.Drawing.Point(128, 109);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(151, 20);
+            this.txtName.TabIndex = 6;
             // 
             // lblName
             // 
@@ -217,19 +217,20 @@
             this.lblReorderLevel.TabIndex = 19;
             this.lblReorderLevel.Text = "Reorder Level";
             // 
-            // txtFindProduct
+            // cmbFind
             // 
-            this.txtFindProduct.Location = new System.Drawing.Point(20, 39);
-            this.txtFindProduct.Name = "txtFindProduct";
-            this.txtFindProduct.Size = new System.Drawing.Size(183, 20);
-            this.txtFindProduct.TabIndex = 21;
+            this.cmbFind.FormattingEnabled = true;
+            this.cmbFind.Location = new System.Drawing.Point(20, 39);
+            this.cmbFind.Name = "cmbFind";
+            this.cmbFind.Size = new System.Drawing.Size(193, 21);
+            this.cmbFind.TabIndex = 21;
             // 
             // frmProdUpd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(291, 398);
-            this.Controls.Add(this.txtFindProduct);
+            this.Controls.Add(this.cmbFind);
             this.Controls.Add(this.txtReorderLevel);
             this.Controls.Add(this.lblReorderLevel);
             this.Controls.Add(this.txtUnitsInOrder);
@@ -244,7 +245,7 @@
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.cmbSupplier);
             this.Controls.Add(this.lblSupplier);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.lblID);
@@ -263,7 +264,7 @@
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblSupplier;
         private System.Windows.Forms.ComboBox cmbSupplier;
@@ -279,6 +280,6 @@
         private System.Windows.Forms.Label lblUnitInStock;
         private System.Windows.Forms.TextBox txtReorderLevel;
         private System.Windows.Forms.Label lblReorderLevel;
-        private System.Windows.Forms.TextBox txtFindProduct;
+        private System.Windows.Forms.ComboBox cmbFind;
     }
 }

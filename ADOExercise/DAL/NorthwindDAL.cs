@@ -49,7 +49,7 @@ namespace ADOExercise
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
-                cmd.ExecuteScalar();
+                //cmd.ExecuteScalar();
 
                 dataAdapter.Fill(dataTable);
 
@@ -75,7 +75,7 @@ namespace ADOExercise
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
-                cmd.ExecuteScalar();
+                //cmd.ExecuteScalar();
 
                 dataAdapter.Fill(dataTable);
 

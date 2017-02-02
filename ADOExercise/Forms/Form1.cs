@@ -13,6 +13,8 @@ namespace ADOExercise
 {
     public partial class frmMain : Form
     {
+        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+
         public frmMain()
         {
             InitializeComponent();
@@ -34,19 +36,19 @@ namespace ADOExercise
 
         private void FillDataViews()
         {
-            NorthwindDAL dalClass = new NorthwindDAL();
-            DataTable annualReports = dalClass.GetAnnualReport();
+            //NorthwindDAL dalClass = new NorthwindDAL();
+            DataTable annualReports = MyDBInstanceClass.GetAnnualReport();
             //getOrderItemsBindingSource.DataSource = annualReports;
             dataAnnualReport.DataSource = annualReports;
 
             DataTable yearReport = new DataTable();
             var row = dataAnnualReport.Rows[0];
-            yearReport = dalClass.GetOrdersByYear((int)row.Cells[0].Value);
+            yearReport = MyDBInstanceClass.GetOrdersByYear((int)row.Cells[0].Value);
             dataOrdersByYear.DataSource = yearReport;
 
             DataTable orderDetails = new DataTable();
             row = dataOrdersByYear.Rows[0];
-            orderDetails = dalClass.GetOrderDetails((int)row.Cells[0].Value);
+            orderDetails = MyDBInstanceClass.GetOrderDetails((int)row.Cells[0].Value);
             dataOrderItem.DataSource = orderDetails;
 
         }
@@ -121,12 +123,20 @@ namespace ADOExercise
 
         private void btnShowProductWindow_Click(object sender, EventArgs e)
         {
-            Form update = Application.OpenForms["frmProdUpd"];
-            if (update == null)
-            {
-                frmProdUpd updForm = new Forms.frmProdUpd();
-                updForm.Show();
-            }
+            //Form update = Application.OpenForms["frmProdUpd"];
+            //if (update == null)
+            //{
+            //    frmProdUpd updForm = new Forms.frmProdUpd();
+            //    updForm.Show();
+            //}
+
+            Form openFrmUpdate = new frmProdUpd();
+            openFrmUpdate.ShowDialog();
+        }
+
+        private void tnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
