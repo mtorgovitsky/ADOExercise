@@ -15,17 +15,27 @@ namespace ADOExercise.Forms
     public partial class frmProdUpd : Form
     {
         public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+        public DataTable AllProducts;
+
+        //List filler for comboboxs's data source
+        List<string> FillComboList(string sColumnName)
+        {
+            List<string> lSresult = new List<string>();
+            foreach (DataRow row in AllProducts.Rows)
+            {
+                lSresult.Add(row[sColumnName].ToString());
+            }
+            return lSresult;
+        }
 
         public frmProdUpd()
         {
             InitializeComponent();
-            DataTable dtProducts = MyDBInstanceClass.GetAllProducts();
-            List<string> comboProducts = new List<string>();
-            foreach (DataRow row in dtProducts.Rows)
-            {
-                comboProducts.Add(row["ProductName"].ToString());
-            }
-            cmbFind.DataSource = comboProducts;
+
+            //Fill the find products combo box
+            AllProducts = MyDBInstanceClass.GetAllProducts();
+
+            cmbFind.DataSource = FillComboList("productName");
         }
 
         private void frmProdUpd_Load(object sender, EventArgs e)
@@ -52,7 +62,29 @@ namespace ADOExercise.Forms
             //        }
             //    }
             //}
-            DataTable dtProducts = MyDBInstanceClass.GetAllProducts();
+            //DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
+
+            FillAllFieldsOnEvent();
+        }
+
+
+
+        private void FillAllFieldsOnEvent()
+        {
+            DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
+            if (dtCurrentProduct.Rows.Count > 0)
+            {
+                txtID.Text = dtCurrentProduct.Rows[0]["ProductID"].ToString();
+                txtName.Text = dtCurrentProduct.Rows[0]["ProductName"].ToString();
+                cmbSupplier.DataSource = FillComboList("SupplierID");
+                cmbCategory.DataSource = FillComboList("CategoryID");
+                txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
+                txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
+            }
+            else
+            {
+                MessageBox.Show("Not found n the DB");
+            }
         }
 
         private void FillProductDetails(int prodID, NorthwindDAL nwd)
@@ -61,6 +93,19 @@ namespace ADOExercise.Forms
             //txtID.Text = sdr["ID"].ToString();
             DataTable dt = nwd.GetProductByID(prodID);
             //dt.Rows[0][]
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            //frmProdUpd tmpFormUpd = new Forms.frmProdUpd();
+            //tmpFormUpd.Close();
+            this.Close();
+        }
+
+
+        private void cmbFind_SelectedValueChanged_1(object sender, EventArgs e)
+        {
+            FillAllFieldsOnEvent();
         }
     }
 }

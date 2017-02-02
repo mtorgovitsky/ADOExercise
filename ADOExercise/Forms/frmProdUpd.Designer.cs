@@ -36,7 +36,7 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblSupplier = new System.Windows.Forms.Label();
             this.cmbSupplier = new System.Windows.Forms.ComboBox();
-            this.cmdCategory = new System.Windows.Forms.ComboBox();
+            this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.lblCategory = new System.Windows.Forms.Label();
             this.txtUnitPrice = new System.Windows.Forms.TextBox();
             this.lblPrice = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.btnSaveChanges.TabIndex = 2;
             this.btnSaveChanges.Text = "Save Changes";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // lblID
             // 
@@ -120,13 +121,13 @@
             this.cmbSupplier.Size = new System.Drawing.Size(149, 21);
             this.cmbSupplier.TabIndex = 8;
             // 
-            // cmdCategory
+            // cmbCategory
             // 
-            this.cmdCategory.FormattingEnabled = true;
-            this.cmdCategory.Location = new System.Drawing.Point(129, 186);
-            this.cmdCategory.Name = "cmdCategory";
-            this.cmdCategory.Size = new System.Drawing.Size(149, 21);
-            this.cmdCategory.TabIndex = 10;
+            this.cmbCategory.FormattingEnabled = true;
+            this.cmbCategory.Location = new System.Drawing.Point(129, 186);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(149, 21);
+            this.cmbCategory.TabIndex = 10;
             // 
             // lblCategory
             // 
@@ -224,12 +225,13 @@
             this.cmbFind.Name = "cmbFind";
             this.cmbFind.Size = new System.Drawing.Size(193, 21);
             this.cmbFind.TabIndex = 21;
+            this.cmbFind.SelectedValueChanged += new System.EventHandler(this.cmbFind_SelectedValueChanged_1);
             // 
             // frmProdUpd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 398);
+            this.ClientSize = new System.Drawing.Size(289, 395);
             this.Controls.Add(this.cmbFind);
             this.Controls.Add(this.txtReorderLevel);
             this.Controls.Add(this.lblReorderLevel);
@@ -241,7 +243,7 @@
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.lblQuantiry);
-            this.Controls.Add(this.cmdCategory);
+            this.Controls.Add(this.cmbCategory);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.cmbSupplier);
             this.Controls.Add(this.lblSupplier);
@@ -268,7 +270,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblSupplier;
         private System.Windows.Forms.ComboBox cmbSupplier;
-        private System.Windows.Forms.ComboBox cmdCategory;
+        private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.TextBox txtUnitPrice;
         private System.Windows.Forms.Label lblPrice;

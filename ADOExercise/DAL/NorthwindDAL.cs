@@ -72,13 +72,8 @@ namespace ADOExercise
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlParameter param = new SqlParameter("@OrderID", orderID);
                 cmd.Parameters.Add(param);
-
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-                //cmd.ExecuteScalar();
-
                 dataAdapter.Fill(dataTable);
-
 
                 conn.Close();
 
@@ -96,7 +91,6 @@ namespace ADOExercise
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("select count(ProductID) from Products", conn);
-                //Execute sql query command
                 int prodCount = (int)cmd.ExecuteScalar();
                 conn.Close();
                 return prodCount;
@@ -113,14 +107,30 @@ namespace ADOExercise
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlParameter param = new SqlParameter("@ProductID", prodID);
                 cmd.Parameters.Add(param);
-
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-                //cmd.ExecuteScalar();
                 SqlDataReader sdr = cmd.ExecuteReader();
                 conn.Close();
                 return sdr;
             }
+        }
+
+        public DataTable GetAllProducts()
+        {
+            DataTable dataTable = new DataTable();
+            //Using connection
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllProducts", conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+
+            }
+
+            return dataTable;
         }
 
         public DataTable GetProductByID(int prodID)
@@ -138,37 +148,36 @@ namespace ADOExercise
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
-                //cmd.ExecuteScalar();
-
                 dataAdapter.Fill(dataTable);
 
 
                 conn.Close();
 
-                return dataTable;
             }
+            return dataTable;
         }
-
-        public DataTable GetAllProducts()
+        public DataTable GetProductByName(string prodName)
         {
             DataTable dataTable = new DataTable();
-            //Using connection
+
             using (SqlConnection conn = new SqlConnection(connectionStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAllProducts", conn);
-
+                SqlCommand cmd = new SqlCommand("GetProductByName", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter param = new SqlParameter("@ProductName", prodName);
+                cmd.Parameters.Add(param);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
                 dataAdapter.Fill(dataTable);
+
 
                 conn.Close();
 
-                return dataTable;
             }
-
+            return dataTable;
         }
+
 
     }
 }
