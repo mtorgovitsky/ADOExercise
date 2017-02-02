@@ -64,12 +64,12 @@ namespace ADOExercise.Forms
             //}
             //DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
 
-            FillAllFieldsOnEvent();
+            FillAllFields();
         }
 
 
 
-        private void FillAllFieldsOnEvent()
+        private void FillAllFields()
         {
             DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
@@ -109,7 +109,7 @@ namespace ADOExercise.Forms
 
         private void cmbFind_SelectedValueChanged_1(object sender, EventArgs e)
         {
-            FillAllFieldsOnEvent();
+            FillAllFields();
         }
     }
 }
