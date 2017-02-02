@@ -87,6 +87,7 @@ namespace ADOExercise.Forms
             else
             {
                 MessageBox.Show("Not found n the DB");
+                cmbFind.Text = "Chai";
             }
         }
 
