@@ -64,6 +64,12 @@ order by
 go
 
 go
+create proc GetAllProducts as
+select *
+from Products
+go
+
+go
 create proc GetProductByID(@ProductID int) as
 select
 	ProductID,

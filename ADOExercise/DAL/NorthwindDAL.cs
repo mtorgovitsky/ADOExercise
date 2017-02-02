@@ -116,14 +116,14 @@ namespace ADOExercise
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
-                cmd.ExecuteScalar();
+                //cmd.ExecuteScalar();
                 SqlDataReader sdr = cmd.ExecuteReader();
                 conn.Close();
                 return sdr;
             }
         }
 
-        public DataTable GetProductDetails(int prodID)
+        public DataTable GetProductByID(int prodID)
         {
             DataTable dataTable = new DataTable();
 
@@ -138,7 +138,7 @@ namespace ADOExercise
 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
 
-                cmd.ExecuteScalar();
+                //cmd.ExecuteScalar();
 
                 dataAdapter.Fill(dataTable);
 
@@ -148,5 +148,27 @@ namespace ADOExercise
                 return dataTable;
             }
         }
+
+        public DataTable GetAllProducts()
+        {
+            DataTable dataTable = new DataTable();
+            //Using connection
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllProducts", conn);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+
+                return dataTable;
+            }
+
+        }
+
     }
 }

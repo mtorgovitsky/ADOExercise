@@ -19,6 +19,13 @@ namespace ADOExercise.Forms
         public frmProdUpd()
         {
             InitializeComponent();
+            DataTable dtProducts = MyDBInstanceClass.GetAllProducts();
+            List<string> comboProducts = new List<string>();
+            foreach (DataRow row in dtProducts.Rows)
+            {
+                comboProducts.Add(row["ProductName"].ToString());
+            }
+            cmbFind.DataSource = comboProducts;
         }
 
         private void frmProdUpd_Load(object sender, EventArgs e)
@@ -45,14 +52,14 @@ namespace ADOExercise.Forms
             //        }
             //    }
             //}
-            cmbFind.
+            DataTable dtProducts = MyDBInstanceClass.GetAllProducts();
         }
 
         private void FillProductDetails(int prodID, NorthwindDAL nwd)
         {
             //SqlDataReader sdr = nwd.GetProductReader(prodID);
             //txtID.Text = sdr["ID"].ToString();
-            DataTable dt = nwd.GetProductDetails(prodID);
+            DataTable dt = nwd.GetProductByID(prodID);
             //dt.Rows[0][]
         }
     }
