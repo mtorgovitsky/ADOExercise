@@ -79,7 +79,10 @@ namespace ADOExercise.Forms
                 cmbSupplier.DataSource = FillComboList("SupplierID");
                 cmbCategory.DataSource = FillComboList("CategoryID");
                 txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
-                txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
+                txtUnitPrice.Text = dtCurrentProduct.Rows[0]["UnitPrice"].ToString();
+                txtUnitsInStock.Text = dtCurrentProduct.Rows[0]["UnitsInStock"].ToString();
+                txtUnitsInOrder.Text = dtCurrentProduct.Rows[0]["UnitsOnOrder"].ToString();
+                txtReorderLevel.Text = dtCurrentProduct.Rows[0]["ReorderLevel"].ToString();
             }
             else
             {
