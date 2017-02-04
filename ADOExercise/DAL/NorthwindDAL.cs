@@ -178,6 +178,39 @@ namespace ADOExercise
             return dataTable;
         }
 
+        public DataTable GetAllSuppliersID()
+        {
+            DataTable dataTable = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
 
+                SqlCommand cmd = new SqlCommand("GetSuppliersID", conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+
+            }
+
+            return dataTable;
+        }
+        public DataTable GetAllCategoriesID()
+        {
+            DataTable dataTable = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("GetCategoriesID", conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+
+            }
+
+            return dataTable;
+        }
     }
 }
