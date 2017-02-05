@@ -255,7 +255,6 @@
             this.Controls.Add(this.btnFind);
             this.Name = "frmProdUpd";
             this.Text = "Update Product";
-            this.Load += new System.EventHandler(this.frmProdUpd_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

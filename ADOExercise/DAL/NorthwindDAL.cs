@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace ADOExercise
@@ -7,7 +8,7 @@ namespace ADOExercise
     {
 
         const string connectionStr =
-            @"Data Source=.;Initial Catalog=Northwind;Integrated Security=True;
+            @"Data Source=.\SQLSRV2014;Initial Catalog=Northwind;Integrated Security=True;
             Pooling=true";
 
         /// <summary>
@@ -212,5 +213,17 @@ namespace ADOExercise
 
             return dataTable;
         }
+
+        //List filler for comboboxs's data source
+        public List<string> FillListFromColumn(string sColumnName, DataTable dtSourceDT)
+        {
+            List<string> lSresult = new List<string>();
+            foreach (DataRow row in dtSourceDT.Rows)
+            {
+                lSresult.Add(row[sColumnName].ToString());
+            }
+            return lSresult;
+        }
+
     }
 }

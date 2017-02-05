@@ -19,16 +19,16 @@ namespace ADOExercise.Forms
         public DataTable AllSuppliers;
         public DataTable AllCategories;
 
-        //List filler for comboboxs's data source
-        List<string> FillComboList(string sColumnName, DataTable dtSourceDT)
-        {
-            List<string> lSresult = new List<string>();
-            foreach (DataRow row in dtSourceDT.Rows)
-            {
-                lSresult.Add(row[sColumnName].ToString());
-            }
-            return lSresult;
-        }
+        ////List filler for comboboxs's data source
+        //List<string> FillComboList(string sColumnName, DataTable dtSourceDT)
+        //{
+        //    List<string> lSresult = new List<string>();
+        //    foreach (DataRow row in dtSourceDT.Rows)
+        //    {
+        //        lSresult.Add(row[sColumnName].ToString());
+        //    }
+        //    return lSresult;
+        //}
 
         public frmProdUpd()
         {
@@ -38,12 +38,12 @@ namespace ADOExercise.Forms
             AllProducts = MyDBInstanceClass.GetAllProducts();
             AllSuppliers = MyDBInstanceClass.GetAllSuppliersID();
             AllCategories = MyDBInstanceClass.GetAllCategoriesID();
-            cmbFind.DataSource = FillComboList("productName", AllProducts);
-        }
+            cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn("productName", AllProducts);
 
-        private void frmProdUpd_Load(object sender, EventArgs e)
-        {
-
+            //Make Comboboxes of the supplierID and the CategoryID
+            //Dropdown List to prevent incorrect input
+            cmbSupplier.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -79,9 +79,9 @@ namespace ADOExercise.Forms
             {
                 txtID.Text = dtCurrentProduct.Rows[0]["ProductID"].ToString();
                 txtName.Text = dtCurrentProduct.Rows[0]["ProductName"].ToString();
-                cmbSupplier.DataSource = FillComboList("SupplierID", AllSuppliers);
+                cmbSupplier.DataSource = MyDBInstanceClass.FillListFromColumn("SupplierID", AllSuppliers);
                 cmbSupplier.Text = dtCurrentProduct.Rows[0]["SupplierID"].ToString();
-                cmbCategory.DataSource = FillComboList("CategoryID", AllCategories);
+                cmbCategory.DataSource = MyDBInstanceClass.FillListFromColumn("CategoryID", AllCategories);
                 cmbCategory.Text = dtCurrentProduct.Rows[0]["CategoryID"].ToString();
                 txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
                 txtUnitPrice.Text = dtCurrentProduct.Rows[0]["UnitPrice"].ToString();
