@@ -15,10 +15,10 @@ namespace ADOExercise.Forms
 {
     public partial class frmProdUpd : Form
     {
-        internal NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
-        internal DataTable Products;
-        internal DataTable Suppliers;
-        internal DataTable Categories;
+        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+        public DataTable Products;
+        public DataTable Suppliers;
+        public DataTable Categories;
 
         public frmProdUpd()
         {
