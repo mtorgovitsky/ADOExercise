@@ -8,7 +8,7 @@ namespace ADOExercise.DAL
 {
     public class Product
     {
-        public int PrductId { get; set; }
+        public int PrductID { get; set; }
         public string ProductName { get; set; }
         public int SupplierID { get; set; }
         public int CategoryID { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ADOExercise.DAL;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,16 +7,13 @@ namespace ADOExercise
 {
     public class NorthwindDAL
     {
+        public Product Product = new Product();
 
         const string connectionStr =
-            @"Data Source=.\SQLSRV2014;Initial Catalog=Northwind;Integrated Security=True;
+            @"Data Source=.;Initial Catalog=Northwind;Integrated Security=True;
             Pooling=true";
 
-        /// <summary>
-        /// Stored Procedure for Annual report.
-        /// </summary>
-        /// <returns>DataTable filled with results</returns>
-        public DataTable GetAnnualReport()
+        public DataTable GetTableFromStoredProcedure(string storedProcedure)
         {
             DataTable dataTable = new DataTable();
             //Using connection
@@ -23,63 +21,84 @@ namespace ADOExercise
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAnnualReport", conn);
-
+                SqlCommand cmd = new SqlCommand(storedProcedure, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
                 dataAdapter.Fill(dataTable);
 
                 conn.Close();
-
-                return dataTable;
             }
-
+            return dataTable;
         }
+
+        public DataTable GetTableFromStoredProcedureByString(string storedProcedure, string columnName, string command)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(storedProcedure, conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter param = new SqlParameter(command, columnName);
+                cmd.Parameters.Add(param);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+            }
+            return dataTable;
+        }
+
+        public DataTable GetTableFromStoredProcedureByInt(string storedProcedure, int columnName, string command)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(storedProcedure, conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter param = new SqlParameter(command, columnName);
+                cmd.Parameters.Add(param);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(dataTable);
+
+                conn.Close();
+            }
+            return dataTable;
+        }
+
+
+        //List filler for comboboxs's data source
+        public List<string> FillListFromColumn(DataTable dtSourceDT, string sColumnName)
+        {
+            List<string> lSresult = new List<string>();
+            foreach (DataRow row in dtSourceDT.Rows)
+            {
+                lSresult.Add(row[sColumnName].ToString());
+            }
+            return lSresult;
+        }
+
+        /// <summary>
+        /// Stored Procedure for Annual report.
+        /// </summary>
+        /// <returns>DataTable filled with results</returns>
+        public DataTable GetAnnualReport()
+        {
+            return GetTableFromStoredProcedure("GetAnnualReport");
+        }
+
         public DataTable GetOrdersByYear(int currentYear)
         {
-            DataTable dataTable = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetCurrentYear", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@currYear", currentYear);
-                cmd.Parameters.Add(param);
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-                //cmd.ExecuteScalar();
-
-                dataAdapter.Fill(dataTable);
-
-
-                conn.Close();
-
-                return dataTable;
-            }
-
+            return GetTableFromStoredProcedureByInt("GetCurrentYear", currentYear, "@currYear");
         }
+
         public DataTable GetOrderDetails(int orderID)
         {
-            DataTable dataTable = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetOrderItems", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@OrderID", orderID);
-                cmd.Parameters.Add(param);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(dataTable);
-
-                conn.Close();
-
-                return dataTable;
-            }
+            return GetTableFromStoredProcedureByInt("GetOrderItems", orderID, "@OrderID");
         }
 
         /// <summary>
@@ -98,6 +117,81 @@ namespace ADOExercise
             }
         }
 
+        public int GetSupplierIDBySupplierName(string supName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select SupplierID from Suppliers where ContactName = '{supName}'", conn);
+                int prodCount = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return prodCount;
+            }
+        }
+
+        public string GetCategoryNameByCategoryID(int catID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select CategoryName from Categories where CategoryID = {catID}", conn);
+                string supName = cmd.ExecuteScalar().ToString();
+                conn.Close();
+                return supName;
+            }
+        }
+
+
+        public int GetCategoryIDByCategoryName(string catName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select CategoryID from Categories where CategoryName = '{catName}'", conn);
+                int prodCount = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return prodCount;
+            }
+        }
+
+        public string GetSupplierNameBySupplierID(int supID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select ContactName from Suppliers where SupplierID = {supID}", conn);
+                string supName = cmd.ExecuteScalar().ToString();
+                conn.Close();
+                return supName;
+            }
+        }
+
+        public DataTable GetSuppliers()
+        {
+            return GetTableFromStoredProcedure("GetSuppliers");
+        }
+
+        public DataTable GetProducts()
+        {
+            return GetTableFromStoredProcedure("GetProducts");
+        }
+
+        public DataTable GetProductByID(int prodID)
+        {
+            return GetTableFromStoredProcedureByInt("GetProductByID", prodID, "@ProductID");
+        }
+
+        public DataTable GetProductByName(string prodName)
+        {
+            return GetTableFromStoredProcedureByString("GetProductByName", prodName, "@ProductName");
+        }
+
+
+        public DataTable GetCategories()
+        {
+            return GetTableFromStoredProcedure("GetCategories");
+        }
+
         public SqlDataReader GetProductReader(int prodID)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
@@ -114,116 +208,5 @@ namespace ADOExercise
                 return sdr;
             }
         }
-
-        public DataTable GetAllProducts()
-        {
-            DataTable dataTable = new DataTable();
-            //Using connection
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetAllProducts", conn);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(dataTable);
-
-                conn.Close();
-
-            }
-
-            return dataTable;
-        }
-
-        public DataTable GetProductByID(int prodID)
-        {
-            DataTable dataTable = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetProductByID", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@ProductID", prodID);
-                cmd.Parameters.Add(param);
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-                dataAdapter.Fill(dataTable);
-
-
-                conn.Close();
-
-            }
-            return dataTable;
-        }
-        public DataTable GetProductByName(string prodName)
-        {
-            DataTable dataTable = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetProductByName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@ProductName", prodName);
-                cmd.Parameters.Add(param);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(dataTable);
-
-
-                conn.Close();
-
-            }
-            return dataTable;
-        }
-
-        public DataTable GetAllSuppliersID()
-        {
-            DataTable dataTable = new DataTable();
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetSuppliersID", conn);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(dataTable);
-
-                conn.Close();
-
-            }
-
-            return dataTable;
-        }
-        public DataTable GetAllCategoriesID()
-        {
-            DataTable dataTable = new DataTable();
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("GetCategoriesID", conn);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(dataTable);
-
-                conn.Close();
-
-            }
-
-            return dataTable;
-        }
-
-        //List filler for comboboxs's data source
-        public List<string> FillListFromColumn(string sColumnName, DataTable dtSourceDT)
-        {
-            List<string> lSresult = new List<string>();
-            foreach (DataRow row in dtSourceDT.Rows)
-            {
-                lSresult.Add(row[sColumnName].ToString());
-            }
-            return lSresult;
-        }
-
     }
 }

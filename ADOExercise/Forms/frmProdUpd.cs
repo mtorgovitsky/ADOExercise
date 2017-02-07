@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADOExercise.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,30 +16,19 @@ namespace ADOExercise.Forms
     public partial class frmProdUpd : Form
     {
         public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
-        public DataTable AllProducts;
-        public DataTable AllSuppliers;
-        public DataTable AllCategories;
-
-        ////List filler for comboboxs's data source
-        //List<string> FillComboList(string sColumnName, DataTable dtSourceDT)
-        //{
-        //    List<string> lSresult = new List<string>();
-        //    foreach (DataRow row in dtSourceDT.Rows)
-        //    {
-        //        lSresult.Add(row[sColumnName].ToString());
-        //    }
-        //    return lSresult;
-        //}
+        public DataTable Products;
+        public DataTable Suppliers;
+        public DataTable Categories;
 
         public frmProdUpd()
         {
             InitializeComponent();
 
             //Fill the find products combo box
-            AllProducts = MyDBInstanceClass.GetAllProducts();
-            AllSuppliers = MyDBInstanceClass.GetAllSuppliersID();
-            AllCategories = MyDBInstanceClass.GetAllCategoriesID();
-            cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn("productName", AllProducts);
+            Products = MyDBInstanceClass.GetProducts();
+            Suppliers = MyDBInstanceClass.GetSuppliers();
+            Categories = MyDBInstanceClass.GetCategories();
+            cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn(Products, "productName");
 
             //Make Comboboxes of the supplierID and the CategoryID
             //Dropdown List to prevent incorrect input
@@ -70,19 +60,37 @@ namespace ADOExercise.Forms
             FillAllFields();
         }
 
+        /// <summary>
+        /// Get object from DataTable by Row and ColumnName
+        /// </summary>
+        /// <param name="dTable">Data Table</param>
+        /// <param name="row">Index of Row in the Rows array</param>
+        /// <param name="columnName">The Name of the Column from given row</param>
+        /// <returns>Returns object if found</returns>
+        private object GetFromTableByRowAndColumnName(DataTable dTable, int row, string columnName)
+        {
+            return dTable.Rows[row][columnName];
+        }
 
 
         private void FillAllFields()
         {
             DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
+            DataTable dtSuppliersNames = MyDBInstanceClass.GetSuppliers();
+            //DataTable dtCategoriesNames = MyDBInstanceClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
             {
-                txtID.Text = dtCurrentProduct.Rows[0]["ProductID"].ToString();
-                txtName.Text = dtCurrentProduct.Rows[0]["ProductName"].ToString();
-                cmbSupplier.DataSource = MyDBInstanceClass.FillListFromColumn("SupplierID", AllSuppliers);
-                cmbSupplier.Text = dtCurrentProduct.Rows[0]["SupplierID"].ToString();
-                cmbCategory.DataSource = MyDBInstanceClass.FillListFromColumn("CategoryID", AllCategories);
-                cmbCategory.Text = dtCurrentProduct.Rows[0]["CategoryID"].ToString();
+                txtID.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductID").ToString();
+                txtName.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductName").ToString();
+                cmbSupplier.DataSource = MyDBInstanceClass.FillListFromColumn(Suppliers, "ContactName");
+                cmbSupplier.Text =
+                    MyDBInstanceClass.GetSupplierNameBySupplierID
+                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID").ToString()));
+                cmbCategory.DataSource = MyDBInstanceClass.FillListFromColumn(Categories, "CategoryName");
+                //cmbCategory.Text = dtCurrentProduct.Rows[0]["CategoryID"].ToString();
+                cmbCategory.Text =
+                    MyDBInstanceClass.GetCategoryNameByCategoryID
+                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID").ToString()));
                 txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
                 txtUnitPrice.Text = dtCurrentProduct.Rows[0]["UnitPrice"].ToString();
                 txtUnitsInStock.Text = dtCurrentProduct.Rows[0]["UnitsInStock"].ToString();
@@ -108,6 +116,28 @@ namespace ADOExercise.Forms
         {
             //frmProdUpd tmpFormUpd = new Forms.frmProdUpd();
             //tmpFormUpd.Close();
+
+            //Fill the product instance with the data from the form Fields
+            Product tmpProd = new Product();
+            int tmpInt;
+            int.TryParse(txtID.Text, out tmpInt);
+            tmpProd.PrductID = tmpInt;
+            tmpProd.ProductName = txtName.Text;
+            int.TryParse(cmbSupplier.Text, out tmpInt);
+            tmpProd.SupplierID = tmpInt;
+            int.TryParse(cmbCategory.Text, out tmpInt);
+            tmpProd.CategoryID = tmpInt;
+            tmpProd.QuantityPerUnit = txtQuantity.Text;
+            decimal tmpDec;
+            decimal.TryParse(txtUnitPrice.Text, out tmpDec);
+            tmpProd.UnitPrice = tmpDec;
+            int.TryParse(txtUnitsInStock.Text, out tmpInt);
+            tmpProd.UnitsInStock = tmpInt;
+            int.TryParse(txtUnitsInOrder.Text, out tmpInt);
+            tmpProd.UnitsOnOrder = tmpInt;
+            int.TryParse(txtReorderLevel.Text, out tmpInt);
+            tmpProd.ReorderLevel = tmpInt;
+
             this.Close();
         }
 

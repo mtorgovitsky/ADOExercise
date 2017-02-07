@@ -64,9 +64,10 @@ order by
 go
 
 go
-create proc GetAllProducts as
+create proc GetProducts as
 select *
 from Products
+order by ProductName
 go
 
 go
@@ -104,14 +105,46 @@ where ProductName = @ProductName
 go
 
 go
-create proc GetSuppliersID as
-select SupplierID
-from Suppliers
-order by SupplierID
+create proc GetSupplierIDBySupplierName(@ContactName nvarchar(30)) as
+select
+	SupplierID,
+	ContactName
+from
+	Suppliers
+where
+	ContactName = @ContactName
+go
+
+
+go
+create proc GetSupplierNameBySupplierID(@SupplierID int) as
+select
+	SupplierID,
+	ContactName
+from
+	Suppliers
+where
+	SupplierID = @SupplierID
 go
 
 go
-create proc GetCategoriesID as
-select CategoryID
-from Categories
+create proc GetSuppliers as
+select
+	SupplierID,
+	ContactName
+from
+	Suppliers
+order by
+	ContactName
+go
+
+go
+create proc GetCategories as
+select
+	CategoryID,
+	CategoryName
+from
+	Categories
+order by
+	CategoryName
 go

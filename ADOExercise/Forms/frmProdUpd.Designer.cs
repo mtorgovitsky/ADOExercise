@@ -108,9 +108,9 @@
             this.lblSupplier.AutoSize = true;
             this.lblSupplier.Location = new System.Drawing.Point(17, 151);
             this.lblSupplier.Name = "lblSupplier";
-            this.lblSupplier.Size = new System.Drawing.Size(59, 13);
+            this.lblSupplier.Size = new System.Drawing.Size(76, 13);
             this.lblSupplier.TabIndex = 7;
-            this.lblSupplier.Text = "Supplier ID";
+            this.lblSupplier.Text = "Supplier Name";
             this.lblSupplier.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // cmbSupplier
@@ -134,9 +134,9 @@
             this.lblCategory.AutoSize = true;
             this.lblCategory.Location = new System.Drawing.Point(17, 190);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(63, 13);
+            this.lblCategory.Size = new System.Drawing.Size(80, 13);
             this.lblCategory.TabIndex = 9;
-            this.lblCategory.Text = "Category ID";
+            this.lblCategory.Text = "Category Name";
             // 
             // txtUnitPrice
             // 
