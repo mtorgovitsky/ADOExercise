@@ -91,7 +91,7 @@ namespace ADOExercise.Forms
                 cmbCategory.Text =
                     MyDBInstanceClass.GetCategoryNameByCategoryID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID").ToString()));
-                txtQuantity.Text = dtCurrentProduct.Rows[0]["QuantityPerUnit"].ToString();
+                txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit").ToString();
                 txtUnitPrice.Text = dtCurrentProduct.Rows[0]["UnitPrice"].ToString();
                 txtUnitsInStock.Text = dtCurrentProduct.Rows[0]["UnitsInStock"].ToString();
                 txtUnitsInOrder.Text = dtCurrentProduct.Rows[0]["UnitsOnOrder"].ToString();
@@ -126,6 +126,7 @@ namespace ADOExercise.Forms
             int.TryParse(cmbSupplier.Text, out tmpInt);
             prodForUpdate.SupplierID = MyDBInstanceClass.GetSupplierIDBySupplierName(cmbSupplier.Text.ToString());
             prodForUpdate.CategoryID = MyDBInstanceClass.GetCategoryIDByCategoryName(cmbCategory.Text.ToString());
+            prodForUpdate.QuantityPerUnit = txtQuantity.ToString();
             decimal tmpDec;
             decimal.TryParse(txtUnitPrice.Text, out tmpDec);
             prodForUpdate.UnitPrice = tmpDec;
