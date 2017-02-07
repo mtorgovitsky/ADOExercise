@@ -118,25 +118,23 @@ namespace ADOExercise.Forms
             //tmpFormUpd.Close();
 
             //Fill the product instance with the data from the form Fields
-            Product tmpProd = new Product();
+            Product prodForUpdate = new Product();
             int tmpInt;
             int.TryParse(txtID.Text, out tmpInt);
-            tmpProd.PrductID = tmpInt;
-            tmpProd.ProductName = txtName.Text;
+            prodForUpdate.PrductID = tmpInt;
+            prodForUpdate.ProductName = txtName.Text;
             int.TryParse(cmbSupplier.Text, out tmpInt);
-            tmpProd.SupplierID = tmpInt;
-            int.TryParse(cmbCategory.Text, out tmpInt);
-            tmpProd.CategoryID = tmpInt;
-            tmpProd.QuantityPerUnit = txtQuantity.Text;
+            prodForUpdate.SupplierID = MyDBInstanceClass.GetSupplierIDBySupplierName(cmbSupplier.Text.ToString());
+            prodForUpdate.CategoryID = MyDBInstanceClass.GetCategoryIDByCategoryName(cmbCategory.Text.ToString());
             decimal tmpDec;
             decimal.TryParse(txtUnitPrice.Text, out tmpDec);
-            tmpProd.UnitPrice = tmpDec;
+            prodForUpdate.UnitPrice = tmpDec;
             int.TryParse(txtUnitsInStock.Text, out tmpInt);
-            tmpProd.UnitsInStock = tmpInt;
+            prodForUpdate.UnitsInStock = tmpInt;
             int.TryParse(txtUnitsInOrder.Text, out tmpInt);
-            tmpProd.UnitsOnOrder = tmpInt;
+            prodForUpdate.UnitsOnOrder = tmpInt;
             int.TryParse(txtReorderLevel.Text, out tmpInt);
-            tmpProd.ReorderLevel = tmpInt;
+            prodForUpdate.ReorderLevel = tmpInt;
 
             this.Close();
         }
