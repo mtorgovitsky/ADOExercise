@@ -76,8 +76,6 @@ namespace ADOExercise.Forms
         private void FillAllFields()
         {
             DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
-            DataTable dtSuppliersNames = MyDBInstanceClass.GetSuppliers();
-            //DataTable dtCategoriesNames = MyDBInstanceClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
             {
                 txtID.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductID").ToString();
@@ -87,15 +85,14 @@ namespace ADOExercise.Forms
                     MyDBInstanceClass.GetSupplierNameBySupplierID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID").ToString()));
                 cmbCategory.DataSource = MyDBInstanceClass.FillListFromColumn(Categories, "CategoryName");
-                //cmbCategory.Text = dtCurrentProduct.Rows[0]["CategoryID"].ToString();
                 cmbCategory.Text =
                     MyDBInstanceClass.GetCategoryNameByCategoryID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID").ToString()));
                 txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit").ToString();
-                txtUnitPrice.Text = dtCurrentProduct.Rows[0]["UnitPrice"].ToString();
-                txtUnitsInStock.Text = dtCurrentProduct.Rows[0]["UnitsInStock"].ToString();
-                txtUnitsInOrder.Text = dtCurrentProduct.Rows[0]["UnitsOnOrder"].ToString();
-                txtReorderLevel.Text = dtCurrentProduct.Rows[0]["ReorderLevel"].ToString();
+                txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice").ToString();
+                txtUnitsInStock.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsInStock").ToString();
+                txtUnitsInOrder.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsOnOrder").ToString();
+                txtReorderLevel.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ReorderLevel").ToString();
             }
             else
             {
