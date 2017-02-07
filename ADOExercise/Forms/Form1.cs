@@ -13,7 +13,7 @@ namespace ADOExercise
 {
     public partial class frmMain : Form
     {
-        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+        public NorthwindDAL MyDALClass = new NorthwindDAL();
 
         public frmMain()
         {
@@ -37,18 +37,18 @@ namespace ADOExercise
         private void FillDataViews()
         {
             //NorthwindDAL dalClass = new NorthwindDAL();
-            DataTable annualReports = MyDBInstanceClass.GetAnnualReport();
+            DataTable annualReports = MyDALClass.GetAnnualReport();
             //getOrderItemsBindingSource.DataSource = annualReports;
             dataAnnualReport.DataSource = annualReports;
 
             DataTable yearReport = new DataTable();
             var row = dataAnnualReport.Rows[0];
-            yearReport = MyDBInstanceClass.GetOrdersByYear((int)row.Cells[0].Value);
+            yearReport = MyDALClass.GetOrdersByYear((int)row.Cells[0].Value);
             dataOrdersByYear.DataSource = yearReport;
 
             DataTable orderDetails = new DataTable();
             row = dataOrdersByYear.Rows[0];
-            orderDetails = MyDBInstanceClass.GetOrderDetails((int)row.Cells[0].Value);
+            orderDetails = MyDALClass.GetOrderDetails((int)row.Cells[0].Value);
             dataOrderItem.DataSource = orderDetails;
 
         }
@@ -72,31 +72,27 @@ namespace ADOExercise
 
                 currentYear = (int)row.Cells[0].Value;
 
-                NorthwindDAL dalClass = new NorthwindDAL();
                 DataTable yearReport = new DataTable();
 
-                yearReport = dalClass.GetOrdersByYear(currentYear);
+                yearReport = MyDALClass.GetOrdersByYear(currentYear);
                 dataOrdersByYear.DataSource = yearReport;
             }
         }
 
         private void UpdateProductsTable(object sender, DataGridViewCellEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-
             //Check if the index is in valued range.
             if (ValidateRowIndex(e, dataOrdersByYear))
             {
-                var row = dataOrdersByYear.Rows[rowIndex];
+                var row = dataOrdersByYear.Rows[e.RowIndex];
 
                 int orderID;
 
                 orderID = (int)row.Cells[0].Value;
 
-                NorthwindDAL dalClass = new NorthwindDAL();
                 DataTable orderDetails = new DataTable();
 
-                orderDetails = dalClass.GetOrderDetails(orderID);
+                orderDetails = MyDALClass.GetOrderDetails(orderID);
                 dataOrderItem.DataSource = orderDetails;
             }
         }

@@ -15,7 +15,7 @@ namespace ADOExercise.Forms
 {
     public partial class frmProdUpd : Form
     {
-        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+        public NorthwindDAL MyDALClass = new NorthwindDAL();
         public DataTable Products;
         public DataTable Suppliers;
         public DataTable Categories;
@@ -25,10 +25,10 @@ namespace ADOExercise.Forms
             InitializeComponent();
 
             //Fill the find products combo box
-            Products = MyDBInstanceClass.GetProducts();
-            Suppliers = MyDBInstanceClass.GetSuppliers();
-            Categories = MyDBInstanceClass.GetCategories();
-            cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn(Products, "productName");
+            Products = MyDALClass.GetProducts();
+            Suppliers = MyDALClass.GetSuppliers();
+            Categories = MyDALClass.GetCategories();
+            cmbFind.DataSource = MyDALClass.FillListFromColumn(Products, "productName");
 
             //Make Comboboxes of the supplierID and the CategoryID
             //Dropdown List to prevent incorrect input
@@ -75,18 +75,18 @@ namespace ADOExercise.Forms
 
         private void FillAllFields()
         {
-            DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
+            DataTable dtCurrentProduct = MyDALClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
             {
                 txtID.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductID").ToString();
                 txtName.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductName").ToString();
-                cmbSupplier.DataSource = MyDBInstanceClass.FillListFromColumn(Suppliers, "ContactName");
+                cmbSupplier.DataSource = MyDALClass.FillListFromColumn(Suppliers, "ContactName");
                 cmbSupplier.Text =
-                    MyDBInstanceClass.GetSupplierNameBySupplierID
+                    MyDALClass.GetSupplierNameBySupplierID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID").ToString()));
-                cmbCategory.DataSource = MyDBInstanceClass.FillListFromColumn(Categories, "CategoryName");
+                cmbCategory.DataSource = MyDALClass.FillListFromColumn(Categories, "CategoryName");
                 cmbCategory.Text =
-                    MyDBInstanceClass.GetCategoryNameByCategoryID
+                    MyDALClass.GetCategoryNameByCategoryID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID").ToString()));
                 txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit").ToString();
                 txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice").ToString();
@@ -97,7 +97,7 @@ namespace ADOExercise.Forms
             else
             {
                 MessageBox.Show("Not found n the DB");
-                cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn(Products, "productName");
+                cmbFind.DataSource = MyDALClass.FillListFromColumn(Products, "productName");
             }
         }
 
@@ -113,8 +113,8 @@ namespace ADOExercise.Forms
             prodForUpdate.PrductID = tmpInt;
             prodForUpdate.ProductName = txtName.Text;
             int.TryParse(cmbSupplier.Text, out tmpInt);
-            prodForUpdate.SupplierID = MyDBInstanceClass.GetSupplierIDBySupplierName(cmbSupplier.Text.ToString());
-            prodForUpdate.CategoryID = MyDBInstanceClass.GetCategoryIDByCategoryName(cmbCategory.Text.ToString());
+            prodForUpdate.SupplierID = MyDALClass.GetSupplierIDBySupplierName(cmbSupplier.Text.ToString());
+            prodForUpdate.CategoryID = MyDALClass.GetCategoryIDByCategoryName(cmbCategory.Text.ToString());
             prodForUpdate.QuantityPerUnit = txtQuantity.ToString();
             decimal tmpDec;
             decimal.TryParse(txtUnitPrice.Text, out tmpDec);

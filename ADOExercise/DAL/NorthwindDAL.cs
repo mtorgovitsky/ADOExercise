@@ -50,7 +50,7 @@ namespace ADOExercise
             return dataTable;
         }
 
-        public DataTable GetTableFromStoredProcedureByInt(string storedProcedure, int columnName, string command)
+        public DataTable GetTableFromStoredProcedureByInt(string storedProcedure, int intValue, string command)
         {
             DataTable dataTable = new DataTable();
 
@@ -60,7 +60,7 @@ namespace ADOExercise
 
                 SqlCommand cmd = new SqlCommand(storedProcedure, conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter(command, columnName);
+                SqlParameter param = new SqlParameter(command, intValue);
                 cmd.Parameters.Add(param);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dataTable);
