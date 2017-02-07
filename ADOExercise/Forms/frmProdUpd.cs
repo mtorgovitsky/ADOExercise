@@ -109,7 +109,6 @@ namespace ADOExercise.Forms
             //SqlDataReader sdr = nwd.GetProductReader(prodID);
             //txtID.Text = sdr["ID"].ToString();
             DataTable dt = nwd.GetProductByID(prodID);
-            //dt.Rows[0][]
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
