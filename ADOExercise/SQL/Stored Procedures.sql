@@ -63,6 +63,8 @@ order by
 	P.ProductID
 go
 
+
+--Form Here it is for Update Products Form
 go
 create proc GetProducts as
 select *

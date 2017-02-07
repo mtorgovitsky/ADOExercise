@@ -15,10 +15,10 @@ namespace ADOExercise.Forms
 {
     public partial class frmProdUpd : Form
     {
-        public NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
-        public DataTable Products;
-        public DataTable Suppliers;
-        public DataTable Categories;
+        internal NorthwindDAL MyDBInstanceClass = new NorthwindDAL();
+        internal DataTable Products;
+        internal DataTable Suppliers;
+        internal DataTable Categories;
 
         public frmProdUpd()
         {
@@ -97,15 +97,8 @@ namespace ADOExercise.Forms
             else
             {
                 MessageBox.Show("Not found n the DB");
-                cmbFind.Text = "Chai";
+                cmbFind.DataSource = MyDBInstanceClass.FillListFromColumn(Products, "productName");
             }
-        }
-
-        private void FillProductDetails(int prodID, NorthwindDAL nwd)
-        {
-            //SqlDataReader sdr = nwd.GetProductReader(prodID);
-            //txtID.Text = sdr["ID"].ToString();
-            DataTable dt = nwd.GetProductByID(prodID);
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)

@@ -74,12 +74,12 @@ namespace ADOExercise
         //List filler for comboboxs's data source
         public List<string> FillListFromColumn(DataTable dtSourceDT, string sColumnName)
         {
-            List<string> lSresult = new List<string>();
+            List<string> lResult = new List<string>();
             foreach (DataRow row in dtSourceDT.Rows)
             {
-                lSresult.Add(row[sColumnName].ToString());
+                lResult.Add(row[sColumnName].ToString());
             }
-            return lSresult;
+            return lResult;
         }
 
         /// <summary>
@@ -192,21 +192,21 @@ namespace ADOExercise
             return GetTableFromStoredProcedure("GetCategories");
         }
 
-        public SqlDataReader GetProductReader(int prodID)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
+        //public SqlDataReader GetProductReader(int prodID)
+        //{
+        //    using (SqlConnection conn = new SqlConnection(connectionStr))
+        //    {
+        //        conn.Open();
 
-                SqlCommand cmd = new SqlCommand("GetProductByID", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter param = new SqlParameter("@ProductID", prodID);
-                cmd.Parameters.Add(param);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                SqlDataReader sdr = cmd.ExecuteReader();
-                conn.Close();
-                return sdr;
-            }
-        }
+        //        SqlCommand cmd = new SqlCommand("GetProductByID", conn);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        SqlParameter param = new SqlParameter("@ProductID", prodID);
+        //        cmd.Parameters.Add(param);
+        //        SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+        //        SqlDataReader sdr = cmd.ExecuteReader();
+        //        conn.Close();
+        //        return sdr;
+        //    }
+        //}
     }
 }
