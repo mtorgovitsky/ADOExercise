@@ -150,3 +150,24 @@ from
 order by
 	CategoryName
 go
+
+go
+create proc UpdateProduct(
+	@productName nvarchar(40),
+	@supplierID int,
+	@categoryID int,
+	@quantityPerUnit nvarchar(20),
+	@unitPrice money,
+	@unitsInStock int,
+	@unitsOnOrder int,
+	@reorderLevel int)as
+update Products
+set SupplierID = @supplierID,
+	CategoryID = @categoryID,
+	QuantityPerUnit = @quantityPerUnit,
+	UnitPrice = @unitPrice,
+	UnitsInStock = @unitsInStock,
+	UnitsOnOrder = @unitsOnOrder,
+	ReorderLevel = @reorderLevel
+where ProductName = @productName
+go

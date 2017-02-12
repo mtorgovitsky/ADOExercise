@@ -12,7 +12,7 @@ namespace ADOExercise
         //Constant with connection string
 
         const string connectionStr =
-            @"Data Source=.;Initial Catalog=Northwind;Integrated Security=True;
+            @"Data Source=.\MSSQLSERVER16;Initial Catalog=Northwind;Integrated Security=True;
             Pooling=true";
 
         public DataTable GetTableFromStoredProcedure(string storedProcedure)
@@ -81,6 +81,7 @@ namespace ADOExercise
             {
                 lResult.Add(row[sColumnName].ToString());
             }
+            lResult.Sort();
             return lResult;
         }
 
@@ -119,7 +120,7 @@ namespace ADOExercise
             }
         }
 
-        public int GetSupplierIDBySupplierName(string supName)
+        public int GetSupplierIDByName(string supName)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
             {
@@ -131,7 +132,7 @@ namespace ADOExercise
             }
         }
 
-        public string GetCategoryNameByCategoryID(int catID)
+        public string GetCategoryNameByID(int catID)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
             {
@@ -144,7 +145,7 @@ namespace ADOExercise
         }
 
 
-        public int GetCategoryIDByCategoryName(string catName)
+        public int GetCategoryIDByName(string catName)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
             {
@@ -156,7 +157,7 @@ namespace ADOExercise
             }
         }
 
-        public string GetSupplierNameBySupplierID(int supID)
+        public string GetSupplierNameByID(int supID)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
             {
@@ -210,5 +211,37 @@ namespace ADOExercise
         //        return sdr;
         //    }
         //}
+        public void UpdateProduct(Product prod)
+        {
+            DataTable id = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UpdateProduct", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter pProductName = new SqlParameter("@productName", prod.ProductName);
+                cmd.Parameters.Add(pProductName);
+                SqlParameter pSupplierID = new SqlParameter("@supplierID", prod.SupplierID);
+                cmd.Parameters.Add(pSupplierID);
+                SqlParameter pCategoryID = new SqlParameter("@categoryID", prod.CategoryID);
+                cmd.Parameters.Add(pCategoryID);
+                SqlParameter pQuantityPerUnit = new SqlParameter("@quantityPerUnit", prod.QuantityPerUnit);
+                cmd.Parameters.Add(pQuantityPerUnit);
+                SqlParameter pUnitPrice = new SqlParameter("@unitPrice", prod.UnitPrice);
+                cmd.Parameters.Add(pUnitPrice);
+                SqlParameter pUnitsInStock = new SqlParameter("@unitsInStock", prod.UnitsInStock);
+                cmd.Parameters.Add(pUnitsInStock);
+                SqlParameter pUnitsOnOrder = new SqlParameter("@unitsOnOrder", prod.UnitsOnOrder);
+                cmd.Parameters.Add(pUnitsOnOrder);
+                SqlParameter pReorderLevel = new SqlParameter("@reorderLevel", prod.ReorderLevel);
+                cmd.Parameters.Add(pReorderLevel);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                // Execute the command
+                dataAdapter.Fill(id);
+            }
+        }
     }
 }

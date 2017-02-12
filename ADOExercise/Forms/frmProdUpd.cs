@@ -32,6 +32,8 @@ namespace ADOExercise.Forms
 
             //Make Comboboxes of the supplierID and the CategoryID
             //Dropdown List to prevent incorrect input
+            txtID.ReadOnly = true;
+            txtName.ReadOnly = true;
             cmbSupplier.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
         }
@@ -82,11 +84,11 @@ namespace ADOExercise.Forms
                 txtName.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductName");
                 cmbSupplier.DataSource = MyDALClass.FillListFromColumn(Suppliers, "ContactName");
                 cmbSupplier.Text =
-                    MyDALClass.GetSupplierNameBySupplierID
+                    MyDALClass.GetSupplierNameByID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID")));
                 cmbCategory.DataSource = MyDALClass.FillListFromColumn(Categories, "CategoryName");
                 cmbCategory.Text =
-                    MyDALClass.GetCategoryNameByCategoryID
+                    MyDALClass.GetCategoryNameByID
                         (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID")));
                 txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit");
                 txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice");
@@ -113,9 +115,9 @@ namespace ADOExercise.Forms
             prodForUpdate.PrductID = tmpInt;
             prodForUpdate.ProductName = txtName.Text;
             int.TryParse(cmbSupplier.Text, out tmpInt);
-            prodForUpdate.SupplierID = MyDALClass.GetSupplierIDBySupplierName(cmbSupplier.Text);
-            prodForUpdate.CategoryID = MyDALClass.GetCategoryIDByCategoryName(cmbCategory.Text);
-            prodForUpdate.QuantityPerUnit = txtQuantity.ToString();
+            prodForUpdate.SupplierID = MyDALClass.GetSupplierIDByName(cmbSupplier.Text);
+            prodForUpdate.CategoryID = MyDALClass.GetCategoryIDByName(cmbCategory.Text);
+            prodForUpdate.QuantityPerUnit = txtQuantity.Text;
             decimal tmpDec;
             decimal.TryParse(txtUnitPrice.Text, out tmpDec);
             prodForUpdate.UnitPrice = tmpDec;
@@ -125,6 +127,8 @@ namespace ADOExercise.Forms
             prodForUpdate.UnitsOnOrder = tmpInt;
             int.TryParse(txtReorderLevel.Text, out tmpInt);
             prodForUpdate.ReorderLevel = tmpInt;
+
+            MyDALClass.UpdateProduct(prodForUpdate);
 
             this.Close();
         }
