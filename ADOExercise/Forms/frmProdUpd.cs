@@ -67,9 +67,9 @@ namespace ADOExercise.Forms
         /// <param name="row">Index of Row in the Rows array</param>
         /// <param name="columnName">The Name of the Column from given row</param>
         /// <returns>Returns object if found</returns>
-        private object GetFromTableByRowAndColumnName(DataTable dTable, int row, string columnName)
+        private string GetFromTableByRowAndColumnName(DataTable dTable, int row, string columnName)
         {
-            return dTable.Rows[row][columnName];
+            return dTable.Rows[row][columnName].ToString();
         }
 
 
@@ -78,21 +78,21 @@ namespace ADOExercise.Forms
             DataTable dtCurrentProduct = MyDALClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
             {
-                txtID.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductID").ToString();
-                txtName.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductName").ToString();
+                txtID.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductID");
+                txtName.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ProductName");
                 cmbSupplier.DataSource = MyDALClass.FillListFromColumn(Suppliers, "ContactName");
                 cmbSupplier.Text =
                     MyDALClass.GetSupplierNameBySupplierID
-                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID").ToString()));
+                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "SupplierID")));
                 cmbCategory.DataSource = MyDALClass.FillListFromColumn(Categories, "CategoryName");
                 cmbCategory.Text =
                     MyDALClass.GetCategoryNameByCategoryID
-                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID").ToString()));
-                txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit").ToString();
-                txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice").ToString();
-                txtUnitsInStock.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsInStock").ToString();
-                txtUnitsInOrder.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsOnOrder").ToString();
-                txtReorderLevel.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ReorderLevel").ToString();
+                        (int.Parse(GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "CategoryID")));
+                txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit");
+                txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice");
+                txtUnitsInStock.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsInStock");
+                txtUnitsInOrder.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsOnOrder");
+                txtReorderLevel.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ReorderLevel");
             }
             else
             {
@@ -113,8 +113,8 @@ namespace ADOExercise.Forms
             prodForUpdate.PrductID = tmpInt;
             prodForUpdate.ProductName = txtName.Text;
             int.TryParse(cmbSupplier.Text, out tmpInt);
-            prodForUpdate.SupplierID = MyDALClass.GetSupplierIDBySupplierName(cmbSupplier.Text.ToString());
-            prodForUpdate.CategoryID = MyDALClass.GetCategoryIDByCategoryName(cmbCategory.Text.ToString());
+            prodForUpdate.SupplierID = MyDALClass.GetSupplierIDBySupplierName(cmbSupplier.Text);
+            prodForUpdate.CategoryID = MyDALClass.GetCategoryIDByCategoryName(cmbCategory.Text);
             prodForUpdate.QuantityPerUnit = txtQuantity.ToString();
             decimal tmpDec;
             decimal.TryParse(txtUnitPrice.Text, out tmpDec);
