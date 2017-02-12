@@ -9,6 +9,8 @@ namespace ADOExercise
     {
         public Product Product = new Product();
 
+        //Constant with connection string
+
         const string connectionStr =
             @"Data Source=.;Initial Catalog=Northwind;Integrated Security=True;
             Pooling=true";
