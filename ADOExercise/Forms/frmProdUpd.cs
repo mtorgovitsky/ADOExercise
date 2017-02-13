@@ -20,6 +20,9 @@ namespace ADOExercise.Forms
         public DataTable Suppliers;
         public DataTable Categories;
 
+        /// <summary>
+        /// CTOR of the form, updates needed fields
+        /// </summary>
         public frmProdUpd()
         {
             InitializeComponent();
@@ -38,6 +41,11 @@ namespace ADOExercise.Forms
             cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
+        /// <summary>
+        /// Search for the Product name given 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFind_Click(object sender, EventArgs e)
         {
             //if (txtFindProduct.Text != String.Empty)
@@ -59,7 +67,7 @@ namespace ADOExercise.Forms
             //}
             //DataTable dtCurrentProduct = MyDBInstanceClass.GetProductByName(cmbFind.Text);
 
-            FillAllFields();
+            FillAllFields(cmbFind.Text);
         }
 
         /// <summary>
@@ -74,8 +82,11 @@ namespace ADOExercise.Forms
             return dTable.Rows[row][columnName].ToString();
         }
 
-
-        private void FillAllFields()
+        /// <summary>
+        /// Updates all the fields of the form with Given Product Name from
+        /// the cmbFind Combo Box
+        /// </summary>
+        private void FillAllFields(string findProduct)
         {
             DataTable dtCurrentProduct = MyDALClass.GetProductByName(cmbFind.Text);
             if (dtCurrentProduct.Rows.Count > 0)
@@ -93,16 +104,26 @@ namespace ADOExercise.Forms
                 txtQuantity.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "QuantityPerUnit");
                 txtUnitPrice.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitPrice");
                 txtUnitsInStock.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsInStock");
-                txtUnitsInOrder.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsOnOrder");
+                txtUnitsOnOrder.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "UnitsOnOrder");
                 txtReorderLevel.Text = GetFromTableByRowAndColumnName(dtCurrentProduct, 0, "ReorderLevel");
             }
+            //If User writes Product Name that is not in the DataBase
             else
             {
-                MessageBox.Show("Not found n the DB");
+                MessageBox.Show(
+                    "The product You've entered \nWas not found in the DataBase",
+                    "NOT FOUND!",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 cmbFind.DataSource = MyDALClass.FillListFromColumn(Products, "productName");
             }
         }
 
+        /// <summary>
+        /// Creates the Instance of the Product Class
+        /// and updates its properties, then send Product to
+        /// DAL layer for updating the DataBase
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             //frmProdUpd tmpFormUpd = new Forms.frmProdUpd();
@@ -123,20 +144,31 @@ namespace ADOExercise.Forms
             prodForUpdate.UnitPrice = tmpDec;
             int.TryParse(txtUnitsInStock.Text, out tmpInt);
             prodForUpdate.UnitsInStock = tmpInt;
-            int.TryParse(txtUnitsInOrder.Text, out tmpInt);
+            int.TryParse(txtUnitsOnOrder.Text, out tmpInt);
             prodForUpdate.UnitsOnOrder = tmpInt;
             int.TryParse(txtReorderLevel.Text, out tmpInt);
             prodForUpdate.ReorderLevel = tmpInt;
 
+            //Send to DAL
             MyDALClass.UpdateProduct(prodForUpdate);
 
             this.Close();
         }
 
-
+        /// <summary>
+        /// Updates all the fields on 'ValueChanged' event
+        /// for Easy scrolling and clicking on products
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbFind_SelectedValueChanged_1(object sender, EventArgs e)
         {
-            FillAllFields();
+            FillAllFields(cmbFind.Text);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

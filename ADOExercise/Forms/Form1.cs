@@ -34,6 +34,9 @@ namespace ADOExercise
             FillDataViews();
         }
 
+        /// <summary>
+        /// Fills the DataViews of the main window
+        /// </summary>
         private void FillDataViews()
         {
             //NorthwindDAL dalClass = new NorthwindDAL();
@@ -59,11 +62,18 @@ namespace ADOExercise
         //    //getOrderItemsTableAdapter.Fill(nrtwOrdersByYear.GetCurrentYear);
         //}
 
+
+        /// <summary>
+        /// On Mouse click updates the Year orders View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateYearTable(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
 
-            //Check if the index is in valued range.
+            //Check if the index is in valid range,
+            //(when user clicks on empty row and not on the data rows).
             if (ValidateRowIndex(e, dataAnnualReport))
             {
                 var row = dataAnnualReport.Rows[rowIndex];
@@ -79,9 +89,15 @@ namespace ADOExercise
             }
         }
 
+        /// <summary>
+        /// On mouse click updates the Products View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateProductsTable(object sender, DataGridViewCellEventArgs e)
         {
-            //Check if the index is in valued range.
+            //Check if the index is in valid range,
+            //(when user clicks on empty row and not on the data rows).
             if (ValidateRowIndex(e, dataOrdersByYear))
             {
                 var row = dataOrdersByYear.Rows[e.RowIndex];
@@ -111,6 +127,7 @@ namespace ADOExercise
             else
                 return true;
         }
+
 
         private void btnFillDataViews_Click(object sender, EventArgs e)
         {

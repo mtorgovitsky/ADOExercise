@@ -42,13 +42,14 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.lblQuantiry = new System.Windows.Forms.Label();
-            this.txtUnitsInOrder = new System.Windows.Forms.TextBox();
-            this.lblUnitInOrder = new System.Windows.Forms.Label();
+            this.txtUnitsOnOrder = new System.Windows.Forms.TextBox();
+            this.lblUnitOnOrder = new System.Windows.Forms.Label();
             this.txtUnitsInStock = new System.Windows.Forms.TextBox();
             this.lblUnitInStock = new System.Windows.Forms.Label();
             this.txtReorderLevel = new System.Windows.Forms.TextBox();
             this.lblReorderLevel = new System.Windows.Forms.Label();
             this.cmbFind = new System.Windows.Forms.ComboBox();
+            this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnFind
@@ -63,11 +64,11 @@
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(13, 6);
+            this.btnSaveChanges.Location = new System.Drawing.Point(19, 6);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(265, 23);
+            this.btnSaveChanges.Size = new System.Drawing.Size(139, 23);
             this.btnSaveChanges.TabIndex = 2;
-            this.btnSaveChanges.Text = "Save Changes";
+            this.btnSaveChanges.Text = "Save Changes and Exit";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
@@ -170,21 +171,21 @@
             this.lblQuantiry.TabIndex = 11;
             this.lblQuantiry.Text = "Quantity Per Unit";
             // 
-            // txtUnitsInOrder
+            // txtUnitsOnOrder
             // 
-            this.txtUnitsInOrder.Location = new System.Drawing.Point(127, 331);
-            this.txtUnitsInOrder.Name = "txtUnitsInOrder";
-            this.txtUnitsInOrder.Size = new System.Drawing.Size(151, 20);
-            this.txtUnitsInOrder.TabIndex = 18;
+            this.txtUnitsOnOrder.Location = new System.Drawing.Point(127, 331);
+            this.txtUnitsOnOrder.Name = "txtUnitsOnOrder";
+            this.txtUnitsOnOrder.Size = new System.Drawing.Size(151, 20);
+            this.txtUnitsOnOrder.TabIndex = 18;
             // 
-            // lblUnitInOrder
+            // lblUnitOnOrder
             // 
-            this.lblUnitInOrder.AutoSize = true;
-            this.lblUnitInOrder.Location = new System.Drawing.Point(16, 334);
-            this.lblUnitInOrder.Name = "lblUnitInOrder";
-            this.lblUnitInOrder.Size = new System.Drawing.Size(72, 13);
-            this.lblUnitInOrder.TabIndex = 17;
-            this.lblUnitInOrder.Text = "Units In Order";
+            this.lblUnitOnOrder.AutoSize = true;
+            this.lblUnitOnOrder.Location = new System.Drawing.Point(17, 334);
+            this.lblUnitOnOrder.Name = "lblUnitOnOrder";
+            this.lblUnitOnOrder.Size = new System.Drawing.Size(77, 13);
+            this.lblUnitOnOrder.TabIndex = 17;
+            this.lblUnitOnOrder.Text = "Units On Order";
             // 
             // txtUnitsInStock
             // 
@@ -227,16 +228,27 @@
             this.cmbFind.TabIndex = 21;
             this.cmbFind.SelectedValueChanged += new System.EventHandler(this.cmbFind_SelectedValueChanged_1);
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(164, 6);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(115, 23);
+            this.btnExit.TabIndex = 22;
+            this.btnExit.Text = "Exit without saving";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // frmProdUpd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(289, 395);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.cmbFind);
             this.Controls.Add(this.txtReorderLevel);
             this.Controls.Add(this.lblReorderLevel);
-            this.Controls.Add(this.txtUnitsInOrder);
-            this.Controls.Add(this.lblUnitInOrder);
+            this.Controls.Add(this.txtUnitsOnOrder);
+            this.Controls.Add(this.lblUnitOnOrder);
             this.Controls.Add(this.txtUnitsInStock);
             this.Controls.Add(this.lblUnitInStock);
             this.Controls.Add(this.txtUnitPrice);
@@ -275,12 +287,13 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label lblQuantiry;
-        private System.Windows.Forms.TextBox txtUnitsInOrder;
-        private System.Windows.Forms.Label lblUnitInOrder;
+        private System.Windows.Forms.TextBox txtUnitsOnOrder;
+        private System.Windows.Forms.Label lblUnitOnOrder;
         private System.Windows.Forms.TextBox txtUnitsInStock;
         private System.Windows.Forms.Label lblUnitInStock;
         private System.Windows.Forms.TextBox txtReorderLevel;
         private System.Windows.Forms.Label lblReorderLevel;
         private System.Windows.Forms.ComboBox cmbFind;
+        private System.Windows.Forms.Button btnExit;
     }
 }

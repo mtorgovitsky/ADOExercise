@@ -9,12 +9,17 @@ namespace ADOExercise
     {
         public Product Product = new Product();
 
-        //Constant with connection string
-
+        //The program Connection string - need to be changed when run
+        //On different PC's
         const string connectionStr =
-            @"Data Source=.\MSSQLSERVER16;Initial Catalog=Northwind;Integrated Security=True;
+            @"Data Source=.\SQLSRV2014;Initial Catalog=Northwind;Integrated Security=True;
             Pooling=true";
 
+        /// <summary>
+        /// Main Method which runs Given Stored Procedure
+        /// </summary>
+        /// <param name="storedProcedure">Name of the Stored Procedure</param>
+        /// <returns>DataTable variable</returns>
         public DataTable GetTableFromStoredProcedure(string storedProcedure)
         {
             DataTable dataTable = new DataTable();
@@ -32,6 +37,14 @@ namespace ADOExercise
             return dataTable;
         }
 
+        /// <summary>
+        /// Runs stored procedure by given Name of the Procedure,
+        /// Passes to the procedure the Column variable and command string
+        /// </summary>
+        /// <param name="storedProcedure">Name of the Stored Procedure</param>
+        /// <param name="columnName">Column Name</param>
+        /// <param name="command">Command String</param>
+        /// <returns></returns>
         public DataTable GetTableFromStoredProcedureByString(string storedProcedure, string columnName, string command)
         {
             DataTable dataTable = new DataTable();
@@ -52,6 +65,14 @@ namespace ADOExercise
             return dataTable;
         }
 
+        /// <summary>
+        /// Runs stored procedure by given Name of the Procedure,
+        /// Passes to the procedure the Integer value and command string
+        /// </summary>
+        /// <param name="storedProcedure">Name of the Stored Procedure</param>
+        /// <param name="intValue">Integer value to search for</param>
+        /// <param name="command">Command string</param>
+        /// <returns></returns>
         public DataTable GetTableFromStoredProcedureByInt(string storedProcedure, int intValue, string command)
         {
             DataTable dataTable = new DataTable();
@@ -72,7 +93,12 @@ namespace ADOExercise
             return dataTable;
         }
 
-
+        /// <summary>
+        /// Fills the List<string> with given Column from Given DataTable
+        /// </summary>
+        /// <param name="dtSourceDT">DataTable to fill from</param>
+        /// <param name="sColumnName">Column Name to fill from</param>
+        /// <returns>List<string> filled with found values</returns>
         //List filler for comboboxs's data source
         public List<string> FillListFromColumn(DataTable dtSourceDT, string sColumnName)
         {
@@ -86,7 +112,7 @@ namespace ADOExercise
         }
 
         /// <summary>
-        /// Stored Procedure for Annual report.
+        /// Gets the Annual report.
         /// </summary>
         /// <returns>DataTable filled with results</returns>
         public DataTable GetAnnualReport()
@@ -94,11 +120,21 @@ namespace ADOExercise
             return GetTableFromStoredProcedure("GetAnnualReport");
         }
 
+        /// <summary>
+        /// Gets all the orders from Given Year
+        /// </summary>
+        /// <param name="currentYear"></param>
+        /// <returns></returns>
         public DataTable GetOrdersByYear(int currentYear)
         {
             return GetTableFromStoredProcedureByInt("GetCurrentYear", currentYear, "@currYear");
         }
 
+        /// <summary>
+        /// Gets the order details from given order
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
         public DataTable GetOrderDetails(int orderID)
         {
             return GetTableFromStoredProcedureByInt("GetOrderItems", orderID, "@OrderID");
@@ -120,6 +156,11 @@ namespace ADOExercise
             }
         }
 
+        /// <summary>
+        /// Gets Supplier ID by given Supplier Name
+        /// </summary>
+        /// <param name="supName"></param>
+        /// <returns></returns>
         public int GetSupplierIDByName(string supName)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
@@ -132,31 +173,11 @@ namespace ADOExercise
             }
         }
 
-        public string GetCategoryNameByID(int catID)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand($"select CategoryName from Categories where CategoryID = {catID}", conn);
-                string supName = cmd.ExecuteScalar().ToString();
-                conn.Close();
-                return supName;
-            }
-        }
-
-
-        public int GetCategoryIDByName(string catName)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionStr))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand($"select CategoryID from Categories where CategoryName = '{catName}'", conn);
-                int prodCount = (int)cmd.ExecuteScalar();
-                conn.Close();
-                return prodCount;
-            }
-        }
-
+        /// <summary>
+        /// Gets Supplier Name by given Supplier ID
+        /// </summary>
+        /// <param name="supID"></param>
+        /// <returns></returns>
         public string GetSupplierNameByID(int supID)
         {
             using (SqlConnection conn = new SqlConnection(connectionStr))
@@ -169,27 +190,82 @@ namespace ADOExercise
             }
         }
 
+        /// <summary>
+        /// Gets Category Name by Given Category ID
+        /// </summary>
+        /// <param name="catID"></param>
+        /// <returns></returns>
+        public string GetCategoryNameByID(int catID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select CategoryName from Categories where CategoryID = {catID}", conn);
+                string supName = cmd.ExecuteScalar().ToString();
+                conn.Close();
+                return supName;
+            }
+        }
+
+        /// <summary>
+        /// Gets Category ID by given Category Name
+        /// </summary>
+        /// <param name="catName"></param>
+        /// <returns></returns>
+        public int GetCategoryIDByName(string catName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"select CategoryID from Categories where CategoryName = '{catName}'", conn);
+                int prodCount = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return prodCount;
+            }
+        }
+
+        /// <summary>
+        /// Gets All Suppliers
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetSuppliers()
         {
             return GetTableFromStoredProcedure("GetSuppliers");
         }
 
+        /// <summary>
+        /// Gets all Products
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetProducts()
         {
             return GetTableFromStoredProcedure("GetProducts");
         }
 
+        /// <summary>
+        /// Gets Product by given Product ID
+        /// </summary>
+        /// <param name="prodID"></param>
+        /// <returns></returns>
         public DataTable GetProductByID(int prodID)
         {
             return GetTableFromStoredProcedureByInt("GetProductByID", prodID, "@ProductID");
         }
 
+        /// <summary>
+        /// Gets Product by Given Product Name
+        /// </summary>
+        /// <param name="prodName"></param>
+        /// <returns></returns>
         public DataTable GetProductByName(string prodName)
         {
             return GetTableFromStoredProcedureByString("GetProductByName", prodName, "@ProductName");
         }
 
-
+        /// <summary>
+        /// Gets All Categories
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetCategories()
         {
             return GetTableFromStoredProcedure("GetCategories");
@@ -211,6 +287,12 @@ namespace ADOExercise
         //        return sdr;
         //    }
         //}
+
+
+        /// <summary>
+        /// Updates Current Product
+        /// </summary>
+        /// <param name="prod">Product Object, filled with Value Data</param>
         public void UpdateProduct(Product prod)
         {
             DataTable id = new DataTable();

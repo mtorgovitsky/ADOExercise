@@ -65,6 +65,8 @@ go
 
 
 --Form Here it is for Update Products Form
+
+--Gets all current Products
 go
 create proc GetProducts as
 select *
@@ -89,6 +91,7 @@ from
 where ProductID = @ProductID
 go
 
+--Find Product by Name
 go
 create proc GetProductByName(@ProductName nvarchar(40)) as
 select
@@ -106,6 +109,7 @@ from
 where ProductName = @ProductName
 go
 
+--Find Supplier ID by Supplier Name
 go
 create proc GetSupplierIDBySupplierName(@ContactName nvarchar(30)) as
 select
@@ -118,6 +122,7 @@ where
 go
 
 
+--Find Supplier Name by Supplier ID
 go
 create proc GetSupplierNameBySupplierID(@SupplierID int) as
 select
@@ -129,6 +134,7 @@ where
 	SupplierID = @SupplierID
 go
 
+--Get All suppliers
 go
 create proc GetSuppliers as
 select
@@ -140,6 +146,7 @@ order by
 	ContactName
 go
 
+--Get all Categories
 go
 create proc GetCategories as
 select
@@ -151,6 +158,7 @@ order by
 	CategoryName
 go
 
+--Update Given Product
 go
 create proc UpdateProduct(
 	@productName nvarchar(40),
